@@ -1,7 +1,10 @@
 import { createContext, useContext, useReducer } from "react";
 
-const TasksContext = createContext(null);
+//* You can think of TasksProvider as a part of the screen that
+//* knows how to deal with tasks, useTasks as a way to read them,
+//* and useTasksDispatch as a way to update them from any component below in the tree.
 
+const TasksContext = createContext(null);
 const TasksDispatchContext = createContext(null);
 
 export function TasksProvider({ children }) {
@@ -16,6 +19,7 @@ export function TasksProvider({ children }) {
   );
 }
 
+//*You can also export functions that use the context from TasksContext.js (custom hooks):
 export function useTasks() {
   return useContext(TasksContext);
 }
@@ -23,6 +27,10 @@ export function useTasks() {
 export function useTasksDispatch() {
   return useContext(TasksDispatchContext);
 }
+
+//*When a component needs to read context, it can do it through these functions:
+// const tasks = useTasks();
+// const dispatch = useTasksDispatch();
 
 function tasksReducer(tasks, action) {
   switch (action.type) {
